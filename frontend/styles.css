@@ -1,33 +1,35 @@
 /* General body styles */
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: 'Poppins', sans-serif; 
+  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
-  padding: 0;
-  background-color: #f0f4f8; 
-  color: #333; 
+  padding: 20px;
+  background-color: #f0f4f8;
+  color: #333;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  padding: 20px;
 }
 
 /* Container to center content */
 .container {
-  max-width: 900px; 
-  padding: 40px; 
-  background-color: #fff; 
-  border-radius: 15px; 
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); 
+  max-width: 900px;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   text-align: center;
   margin: auto;
-  
 }
 
 /* Site logo styling */
 .site-logo {
-  max-width: 150px; 
-  margin-bottom: 20px; 
+  max-width: 150px;
+  margin-bottom: 20px;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -35,42 +37,47 @@ body {
 
 /* Heading styles */
 h1 {
-  font-size: 2.5rem; 
-  color: #32a4dc; 
-  margin-bottom: 30px; 
+  font-size: 2.5rem;
+  color: #32a4dc;
+  margin-bottom: 30px;
 }
 
 /* Textarea styles */
 textarea {
-  width: 80%;
-  height: 150px; 
+  width: 100%;
+  height: 140px;
   margin-bottom: 25px;
-  padding: 15px; 
+  padding: 15px;
   border: 1px solid #ccc;
   border-radius: 10px;
   font-size: 16px;
-  background-color: #f8f9fa; 
-  resize: none; 
+  background-color: #f8f9fa;
+  resize: none;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+textarea.half-height {
+  height: 70px;
 }
 
 /* Button styles */
 button {
-  padding: 15px 30px; 
-  font-size: 1.1rem; 
+  padding: 15px 30px;
+  margin: 0 10px;
+  font-size: 1.1rem;
   background-color: #32a4dc;
   color: white;
   border: none;
-  border-radius: 10px; 
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 20px; 
+  margin-top: 20px;
   margin-bottom: 30px;
-  box-shadow: 0 5px 10px rgba(0, 123, 255, 0.2); 
+  box-shadow: 0 5px 10px rgba(0, 123, 255, 0.2);
 }
 
 button:hover {
-  background-color: #0056b3; 
+  background-color: #0056b3;
 }
 
 /* Disabled button styles */
@@ -99,38 +106,31 @@ button.hidden {
 
 /* Output and advice sections */
 #resultOutput {
-  margin-top: 30px; 
+  text-align: start;
+  margin-top: 30px;
   margin-bottom: 70px;
-  padding: 20px; 
-  background-color: #e9ecef; 
-  border-radius: 10px; 
+  padding: 20px;
+  background-color: #e9ecef;
+  border-radius: 10px;
   font-size: 1.1rem;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05); 
-  min-height: 60px; 
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+  min-height: 60px;
   color: #333;
 }
 
-/* Media queries to make it responsive */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-
-  button {
-    padding: 12px 25px;
-  }
-  
-  textarea {
-    height: 120px; 
-  }
+#resultOutput.hidden {
+  display: none;
 }
 
-/* Small text styles */
+/* Font specific styling */
 .small-text {
   font-size: 14px;
   color: #999;
 }
 
-
-
-
+/* Responsive styles */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+}

@@ -13,11 +13,13 @@ Global variable definitions and initializations
 */
 // Initial empty messages (a.k.a. prompts) array definition and initialization (will eventually contain an array of multiple message objects, i.e., multiple prompts)
 let messages = [];
-// Prompt prefixes (for guardrails, etc.)
-const firstMessagePrefix =
-  "You are a chatbot that only gives job interview, company, technical and behavioural related responses. Given the following job spec, provide personalized interview advice based on that job spec.";
-const subsequentMessagesPrefix =
-  "Stay in the character of a chatbot that only gives job interview, company, technical and behavioural related responses. Now answer the following based on the original job spec.";
+// Prompt prefixes (including guardrails, etc.)
+const promptPrefix = `You are a chatbot that only gives job interview, company, technical and behavioural related responses.
+  Given the following job spec, provide personalized interview advice based on job specification.
+  Also take what I know about the company culture into account.
+  And use my skills to do a gap fit analysis of what I know and what the job spec requires.
+  Tell me how much additional time I need to spend preparing for the interview in hours, based on the above criteria, and up to a maximum of 10 hours.
+  Finally, give an overall rating out of 10 of how well I am prepared for the interview based on what I know about the company and my current skill set.`;
 
 /*
 Express app creation
@@ -44,7 +46,8 @@ Express routes
 // Post route to handle the user's message (i.e., prompt) and return the chatbot's response
 app.post("/message", (req, res) => {
   // Get the body message (so, the user's prompt) from the posted HTTP request's body
-  const message = req.body.message;
+  // const message = req.body.message;
+  const { companyCulture, skills, message } = req.body;
 
   /* Then push (i.e. add) it to your messages array.
   If it's the first message, add a some default job spec context to the message (a.k.a. prompt).
@@ -52,9 +55,7 @@ app.post("/message", (req, res) => {
   This is done below using the JavaScript ternary (?) operator (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) */
   messages.push({
     role: "user",
-    content: !messages.length
-      ? `${firstMessagePrefix} ${message}`
-      : `${subsequentMessagesPrefix} ${message}`,
+    content: `${promptPrefix}. Data for the response... Job spec or question: ${message}. Current company culture knowledge: ${companyCulture}. Current skill set: ${companyCulture}`,
   });
 
   // Send your message array, filtered for only user prompts (not for chatbot responses), to the OpenAI API and get a response back

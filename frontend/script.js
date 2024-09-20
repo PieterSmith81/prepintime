@@ -19,16 +19,22 @@ function enableButton(button, updatedButtonText = "") {
   }
 }
 
-function focusOnPromptInput(selectText = false) {
-  const promptInputElement = document.getElementById("promptInput");
-  promptInputElement.focus();
-
-  if (selectText) {
-    promptInputElement.select();
-  }
+function focusOnFirstInput() {
+  const companyCultureInputElement = document.getElementById(
+    "companyCultureInput"
+  );
+  companyCultureInputElement.focus();
 }
 
-function clearPromptInput() {
+function clearInputs() {
+  const companyCultureInputElement = document.getElementById(
+    "companyCultureInput"
+  );
+  companyCultureInputElement.value = "";
+
+  const skillsInputElement = document.getElementById("skillsInput");
+  skillsInputElement.value = "";
+
   const promptInputElement = document.getElementById("promptInput");
   promptInputElement.value = "";
 }
@@ -46,14 +52,13 @@ Main functions
 */
 // Function to get interview advice
 async function getInterviewAdvice() {
+  const companyCultureInputValue = document.getElementById(
+    "companyCultureInput"
+  ).value;
+  const skillsInputValue = document.getElementById("skillsInput").value;
   const promptInputValue = document.getElementById("promptInput").value;
   const submitButton = document.getElementById("submitButton");
   const resetButton = document.getElementById("resetButton");
-
-  if (!promptInputValue) {
-    alert("Please paste the job spec or ask me a question...");
-    return;
-  }
 
   try {
     // Disable the submit and reset buttons while the request is being made
@@ -69,7 +74,11 @@ async function getInterviewAdvice() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: promptInputValue }),
+      body: JSON.stringify({
+        companyCulture: companyCultureInputValue,
+        skills: skillsInputValue,
+        message: promptInputValue,
+      }),
     });
 
     const data = await response.json();
@@ -85,8 +94,8 @@ async function getInterviewAdvice() {
     enableButton(submitButton, "Get Interview Advice");
     showElement(resetButton);
 
-    // Focus on the prompt input element and select the text after the advice is displayed
-    focusOnPromptInput(true);
+    // Focus on the first input element
+    focusOnFirstInput();
   } catch (error) {
     // Re-enable the submit and reset buttons if something goes wrong
     enableButton(submitButton, "Get Interview Advice");
@@ -124,11 +133,11 @@ async function resetChatbotState() {
     // Show the result output element
     showElement(resultOutputElement);
 
-    // clear the prompt input after the chatbot state is reset
-    clearPromptInput();
+    // clear the inputs after the chatbot state is reset
+    clearInputs();
 
-    // Focus on the prompt input element after the chatbot state is reset
-    focusOnPromptInput();
+    // Focus on the first input element after the chatbot state is reset
+    focusOnFirstInput();
   } catch (error) {
     // Hide the result output element if something goes wrong
     hideElement(document.getElementById("resultOutput"));
@@ -146,6 +155,26 @@ async function resetChatbotState() {
 /*
 Event listeners
 */
+document
+  .getElementById("companyCultureInput")
+  .addEventListener("keydown", function (event) {
+    // Enter will "submit" the prompt, while Shift + Enter will add a new line in the prompt input element (similar to ChatGPT's web interface)
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      getInterviewAdvice();
+    }
+  });
+
+document
+  .getElementById("skillsInput")
+  .addEventListener("keydown", function (event) {
+    // Enter will "submit" the prompt, while Shift + Enter will add a new line in the prompt input element (similar to ChatGPT's web interface)
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      getInterviewAdvice();
+    }
+  });
+
 document
   .getElementById("promptInput")
   .addEventListener("keydown", function (event) {

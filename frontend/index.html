@@ -3,13 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Interview Advice Chatbot</title>
+    <title>PrepInTime</title>
     <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
   </head>
-  <body onload="focusOnPromptInput()">
+  <body onload="focusOnFirstInput()">
     <div class="container">
-      <img src="/images/SoC-Logo.png" alt="Logo" class="site-logo">
-      <h1>Personalized Job Interview Advice</h1>
+      <img
+        src="assets/images/soc-logo.png"
+        alt="PrepInTime Logo"
+        class="site-logo"
+      />
+      <h1>PrepInTime</h1>
+      <h3>AI Powered Personalized Job Interview Advice</h3>
       <p>
         Simply paste a job spec below, and I'll give you tailored advice to help
         you ace the interview. Need more info on the company or have technical
@@ -18,6 +24,19 @@
       <p class="small-text">
         Hit &lt;Enter&gt; to submit or &lt;Shift+Enter&gt; for a new line.
       </p>
+      <h3>Company Culture</h3>
+      <textarea
+        id="companyCultureInput"
+        class="half-height"
+        placeholder="What do you know about the company culture?"
+      ></textarea>
+      <h3>Skills</h3>
+      <textarea
+        id="skillsInput"
+        class="half-height"
+        placeholder="What skills do you currently have?"
+      ></textarea>
+      <h3>Job Spec or Question</h3>
       <textarea
         id="promptInput"
         placeholder="Paste the job spec here or ask me a question..."
@@ -30,7 +49,5 @@
       </button>
       <div id="resultOutput" class="hidden"></div>
     </div>
-
-    <script src="script.js"></script>
   </body>
 </html>
