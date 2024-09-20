@@ -6,15 +6,28 @@
     <title>Interview Advice Chatbot</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body onload="focusOnPromptInput()">
     <div class="container">
       <h1>Personalized Job Interview Advice</h1>
+      <p>
+        Simply paste a job spec below, and I'll give you tailored advice to help
+        you ace the interview. Need more info on the company or have technical
+        or behavioural questions? Just ask, and I've got you covered!
+      </p>
+      <p class="small-text">
+        Hit &lt;Enter&gt; to submit or &lt;Shift+Enter&gt; for a new line.
+      </p>
       <textarea
-        id="jobSpecInput"
-        placeholder="Paste the job spec here..."
+        id="promptInput"
+        placeholder="Paste the job spec here or ask me a question..."
       ></textarea>
-      <button onclick="getInterviewAdvice()">Get Interview Advice</button>
-      <div id="adviceOutput"></div>
+      <button id="submitButton" onclick="getInterviewAdvice()">
+        Get Interview Advice
+      </button>
+      <button id="resetButton" class="inverse" onclick="resetChatbotState()">
+        Start a New Conversation
+      </button>
+      <div id="resultOutput" class="hidden"></div>
     </div>
 
     <script src="script.js"></script>

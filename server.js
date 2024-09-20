@@ -1,29 +1,49 @@
-// Node.js package imports
+/*
+Node.js package imports
+*/
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { Configuration, OpenAIApi } from "openai";
+import markdownit from "markdown-it"; // https://github.com/markdown-it/markdown-it
 import "dotenv/config";
 
-// Express app creation
+/*
+Global variable definitions and initializations
+*/
+// Initial empty messages (a.k.a. prompts) array definition and initialization (will eventually contain an array of multiple message objects, i.e., multiple prompts)
+let messages = [];
+// Prompt prefixes (for guardrails, etc.)
+const firstMessagePrefix =
+  "You are a chatbot that only gives job interview, company, technical and behavioural related responses. Given the following job spec, provide personalized interview advice based on that job spec.";
+const subsequentMessagesPrefix =
+  "Stay in the character of a chatbot that only gives job interview, company, technical and behavioural related responses. Now answer the following based on the original job spec.";
+
+/*
+Express app creation
+*/
 const app = express();
 
-// Middleware setup
+/*
+Middleware setup
+*/
 app.use(cors());
 app.use(bodyParser.json());
 
-// OpenAI v3 API setup
+/*
+OpenAI v3 API setup
+*/
 const config = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(config);
 
-// Initial empty messages (a.k.a. prompts) array definition and initialization (will eventually contain an array of multiple message objects, i.e., multiple prompts)
-let messages = [];
-
-// Express routes
+/*
+Express routes
+*/
+// Post route to handle the user's message (i.e., prompt) and return the chatbot's response
 app.post("/message", (req, res) => {
-  // Get the body message (a.k.a. prompt) from the posted HTTP request's body
+  // Get the body message (so, the user's prompt) from the posted HTTP request's body
   const message = req.body.message;
 
   /* Then push (i.e. add) it to your messages array.
@@ -32,35 +52,52 @@ app.post("/message", (req, res) => {
   This is done below using the JavaScript ternary (?) operator (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) */
   messages.push({
     role: "user",
-    content: messages.length
-      ? message
-      : `Given the following job spec, provide personalized interview advice. ${message}`,
+    content: !messages.length
+      ? `${firstMessagePrefix} ${message}`
+      : `${subsequentMessagesPrefix} ${message}`,
   });
 
-  // Send your message array (so all prompts submitted so far) to the OpenAI API and get a response back
+  // Send your message array, filtered for only user prompts (not for chatbot responses), to the OpenAI API and get a response back
+  const userMessages = messages.filter((message) => message.role === "user");
+
   const response = openai.createChatCompletion({
-    model: "gpt-4o",
-    messages,
+    model: "gpt-4o-mini",
+    messages: userMessages,
   });
 
   // Then add that response to the messages array and send it back the the client (i.e., to our frontend, Postman, etc.)
   response
     .then((result) => {
-      // Add the response to the messages array
+      // Add the chatbot's response to the messages array
       messages.push({
-        role: "assistant",
+        role: "chatbot",
         content: result.data.choices[0].message.content,
       });
 
+      // Parse the markdown in the chatbot's response to HTML using markdown-it
+      const md = markdownit();
+      const parsedMarkdown = md.render(result.data.choices[0].message.content);
+
       // Send the response back to the client as JSON
-      res.json({ advice: result.data.choices[0].message.content });
+      res.json({ advice: parsedMarkdown });
     })
     .catch((err) => {
       console.log(err);
     });
 });
 
-// Spin up the Express server
+// Post route to reset the chatbot's state (i.e., to clear the messages array)
+app.post("/reset", (req, res) => {
+  // Reset the messages array
+  messages = [];
+
+  // Send a response back to the client
+  res.json({ message: "Chatbot history and context cleared." });
+});
+
+/*
+Express server spin up
+*/
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
