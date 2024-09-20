@@ -1,3 +1,7 @@
+# PrepInTime
+
+An AI Powered Personalized Job Interview Advice Chatbot
+
 ## Usage
 
 1. Clone the repository to your local machine.

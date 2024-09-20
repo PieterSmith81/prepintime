@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200">
+  <defs>
+    <clipPath id="rounded-corners">
+      <rect x="0" y="0" width="240" height="200" rx="20" ry="20" />
+    </clipPath>
+  </defs>
+  
+  <g clip-path="url(#rounded-corners)">
+    <rect width="240" height="200" fill="#32A4DC"/>
+    <circle cx="120" cy="70" r="55" fill="white" opacity="0.2"/>
+    <path d="M120 25 L120 70 L155 70" stroke="white" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <text x="120" y="160" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle">PrepInTime</text>
+    <text x="120" y="185" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">AI Interview Advisor</text>
+  </g>
+</svg>
