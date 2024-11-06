@@ -4,44 +4,60 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PrepInTime</title>
+    <meta
+      name="description"
+      content="An AI-powered, personalised job interview advice chatbot"
+    />
+    <meta name="author" content="Pieter Smith" />
+    <meta
+      name="keywords"
+      content="Interview Advice Chatbot, Job Interview Advice, AI Interview Advice, Interview Advice"
+    />
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
   </head>
   <body onload="focusOnFirstInput()">
     <div class="container">
-      <img
-        src="assets/images/prep-in-time-logo.svg"
-        alt="PrepInTime Logo"
-        class="site-logo"
-      />
+      <a href="#">
+        <img
+          src="assets/images/prep-in-time-logo.svg"
+          alt="PrepInTime Logo"
+          class="site-logo"
+      /></a>
       <p>
-        Simply enter your company knowledge, skills, and paste a job spec below.
-        I'll then give you tailored advice to help you ace the interview! Need
-        more info on the company or have technical or behavioural questions?
-        Just ask, and I've got you covered (use the "Job Spec or Question" box
-        below for any follow-up questions).
+        Paste a job spec below. Optionally, enter your knowledge about the
+        company and current skills too. I'll then give you tailored advice to
+        help you ace the interview! Need more info on the company or have
+        technical or behavioural questions? Just ask, and I've got you covered
+        (use the "Job Spec or Question" box for follow-up questions).
       </p>
       <p class="small-text">
-        Hit &lt;Enter&gt; to submit or &lt;Shift+Enter&gt; for a new line.<br />
-        Then scroll down to see the interview advice.
+        Hit &lt;Enter&gt; to submit or &lt;Shift+Enter&gt; for a new line.Then
+        scroll down to see your interview advice.<br />
+        For optimal advice and a complete gap analysis, make sure you fill out
+        the "Company Knowledge" and "Skills" sections.
       </p>
-      <h3>Company Culture</h3>
+
+      <h3>Job Spec or Question</h3>
       <textarea
-        id="companyCultureInput"
-        class="half-height"
-        placeholder="What do you know about the company culture?"
+        id="jobSpecQuestionInput"
+        placeholder="Paste the job spec here or ask me a question..."
       ></textarea>
-      <h3>Skills</h3>
+
+      <h3>Company Knowledge (Optional)</h3>
+      <textarea
+        id="companyKnowledgeInput"
+        class="half-height"
+        placeholder="What do you know about the company and its culture?"
+      ></textarea>
+
+      <h3>Skills (Optional)</h3>
       <textarea
         id="skillsInput"
         class="half-height"
         placeholder="What skills do you currently have?"
       ></textarea>
-      <h3>Job Spec or Question</h3>
-      <textarea
-        id="promptInput"
-        placeholder="Paste the job spec here or ask me a question..."
-      ></textarea>
+
       <button id="submitButton" onclick="getInterviewAdvice()">
         Get Interview Advice
       </button>

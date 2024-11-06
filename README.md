@@ -1,16 +1,38 @@
 # PrepInTime
 
-An AI Powered Personalized Job Interview Advice Chatbot
+An AI-powered, personalised job interview advice chatbot.
+
+## Live Website
+
+### Coming Soon!
 
 ## Usage
 
-1. Clone the repository to your local machine.
+#### General Usage
 
-2. After cloning the GitHub repository, create a `.env` file in the root of your local Git repository. Then copy and paste the following line into your local .env file and save it. (edited)
+1. Copy and paste any job spec text into the PrepInTime chatbot's "Job Spec or Question" box.
+2. Optionally, enter your knowledge about the company and your current skills into the relevant sections, too.
+3. Hit `<Enter>` and PrepInTime will give you tailored advice to help you ace your interview!
+
+Need more info on the company or have technical or behavioural questions?  
+Just ask, and we've got you covered (use the "Job Spec or Question" box for follow-up questions).
+
+#### Usage Tips
+
+- Hit `<Enter>` in any of the input boxes to get your interview advice.
+- Or hit `<Shift+Enter>` in any of the input boxes for a new line (similar to ChatGPT).
+- Then, scroll down to see your interview advice.
+- For optimal advice and a complete gap analysis, make sure you fill out the "Company Knowledge" and "Skills" sections.
+
+## Installation
+
+1. Clone the GitHub repository to your local machine.
+
+2. After cloning the GitHub repository, create a `.env` file in the root of your local Git repository folder. Then copy and paste the following line into your local .env file and save it.
    OPENAI_API_KEY=`YOUR_OPENAI_API_KEY_GOES_HERE`
 
 3. Run `npm install` in your terminal to install all project dependencies.
 
-4. Run `npm run dev` in your terminal to start the express server.
+4. Run `npm run dev` in your terminal to start an automatically restarting express server (implemented using nodemon). Alternatively, run `npm start` to start the express server in production mode (in production mode, the express server won't restart automatically on code changes).
 
-5. Open the `/frontend/index.html` file in your browser (either open the file directly in your browser or use the VS code Live Server extension's `right-click > Open with Live Server` option).
+5. Open the `/frontend/index.html` file in your browser. Either open the file directly in your browser or use the VS code Live Server extension's `right-click > Open with Live Server` option.

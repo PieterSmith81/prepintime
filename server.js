@@ -14,12 +14,13 @@ Global variable definitions and initializations
 // Initial empty messages (a.k.a. prompts) array definition and initialization (will eventually contain an array of multiple message objects, i.e., multiple prompts)
 let messages = [];
 // Prompt prefixes (including guardrails, etc.)
-const promptPrefix = `You are a chatbot that only gives job interview, company, technical and behavioural related responses.
-  Given the following job spec, provide personalized interview advice based on job specification.
-  Also take what I know about the company culture into account.
-  And use my skills to do a gap fit analysis of what I know and what the job spec requires.
-  Tell me how much additional time I need to spend preparing for the interview in hours, based on the above criteria, and up to a maximum of 10 hours.
-  Finally, give an overall rating out of 10 of how well I am prepared for the interview based on what I know about the company and my current skill set.`;
+const promptPrefix = `You are a chatbot that only gives job interview, company, technical, and behavioural-related responses and nothing else!
+
+Based on the provided job specification, give me personalised interview advice to ace the job interview. Or answer my follow-up question regarding the job spec.
+  
+Here is the job spec or follow-up question:`;
+let previousCompanyKnowledge = "";
+let previousSkills = "";
 
 /*
 Express app creation
@@ -43,27 +44,62 @@ const openai = new OpenAIApi(config);
 /*
 Express routes
 */
-// Post route to handle the user's message (i.e., prompt) and return the chatbot's response
+// Post route to handle the user's prompts (i.e., prompt) and return the chatbot's response
 app.post("/message", (req, res) => {
-  // Get the body message (so, the user's prompt) from the posted HTTP request's body
-  // const message = req.body.message;
-  const { companyCulture, skills, message } = req.body;
+  // Get the body (so, the user's prompts) from the posted HTTP request's body
+  const { jobSpecQuestion, companyKnowledge, skills } = req.body;
 
-  /* Then push (i.e. add) it to your messages array.
-  If it's the first message, add a some default job spec context to the message (a.k.a. prompt).
-  Or else, just add the message as is.
-  This is done below using the JavaScript ternary (?) operator (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) */
+  // Create a prompt modifier based on the user's company knowledge and skills, and whether they are specified in the first place or have changed since the last submit.
+  let promptSuffix = "";
+
+  if (
+    companyKnowledge &&
+    skills &&
+    (companyKnowledge !== previousCompanyKnowledge || skills !== previousSkills)
+  ) {
+    promptSuffix += `
+After giving me personalised interview advice or answering my follow-up question regarding the job spec, also do the following...
+Do a gap fit analysis between what I know and what the job spec requires.
+Next, tell me how much time I need to spend preparing for the interview in hours, based on the above criteria, and up to a maximum of 10 hours.
+Then, give a rounded overall rating out of 10 on how well prepared I am for the interview based on what I know about the company and my current skill set.`;
+  }
+
+  if (companyKnowledge && companyKnowledge !== previousCompanyKnowledge) {
+    promptSuffix += `
+    
+Take what I know about the company and its culture into account for your response, which is:
+${companyKnowledge}.`;
+  }
+
+  if (skills && skills !== previousSkills) {
+    promptSuffix += `
+    
+Take my current skill set into account for your response, which is:
+${skills}.`;
+  }
+
+  previousCompanyKnowledge = companyKnowledge;
+  previousSkills = skills;
+
+  // Create the final prompt by combining the prompt prefix, the user's input, and the prompt suffix
+  const finalPrompt = `${promptPrefix}
+
+    ${jobSpecQuestion}
+
+    ${promptSuffix}`;
+
+  // console.log(finalPrompt); // Debug code
+
+  // Then push (i.e. add) the final prompt to the messages array
   messages.push({
     role: "user",
-    content: `${promptPrefix}. Data for the response... Job spec or question: ${message}. Current company culture knowledge: ${companyCulture}. Current skill set: ${companyCulture}`,
+    content: finalPrompt,
   });
 
-  // Send your message array, filtered for only user prompts (not for chatbot responses), to the OpenAI API and get a response back
-  const userMessages = messages.filter((message) => message.role === "user");
-
+  // Make the request to the OpenAI API to get the chatbot's response
   const response = openai.createChatCompletion({
     model: "gpt-4o-mini",
-    messages: userMessages,
+    messages: messages,
   });
 
   // Then add that response to the messages array and send it back the the client (i.e., to our frontend, Postman, etc.)
@@ -71,7 +107,7 @@ app.post("/message", (req, res) => {
     .then((result) => {
       // Add the chatbot's response to the messages array
       messages.push({
-        role: "chatbot",
+        role: "assistant",
         content: result.data.choices[0].message.content,
       });
 

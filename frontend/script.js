@@ -20,23 +20,23 @@ function enableButton(button, updatedButtonText = "") {
 }
 
 function focusOnFirstInput() {
-  const companyCultureInputElement = document.getElementById(
-    "companyCultureInput"
-  );
-  companyCultureInputElement.focus();
+  const elementToFocusOn = document.getElementById("jobSpecQuestionInput");
+  elementToFocusOn.focus();
 }
 
 function clearInputs() {
-  const companyCultureInputElement = document.getElementById(
-    "companyCultureInput"
+  const jobSpecQuestionElement = document.getElementById(
+    "jobSpecQuestionInput"
   );
-  companyCultureInputElement.value = "";
+  jobSpecQuestionElement.value = "";
 
-  const skillsInputElement = document.getElementById("skillsInput");
-  skillsInputElement.value = "";
+  const companyKnowledgeElement = document.getElementById(
+    "companyKnowledgeInput"
+  );
+  companyKnowledgeElement.value = "";
 
-  const promptInputElement = document.getElementById("promptInput");
-  promptInputElement.value = "";
+  const skillsElement = document.getElementById("skillsInput");
+  skillsElement.value = "";
 }
 
 function showElement(element) {
@@ -52,11 +52,21 @@ Main functions
 */
 // Function to get interview advice
 async function getInterviewAdvice() {
-  const companyCultureInputValue = document.getElementById(
-    "companyCultureInput"
+  const jobSpecQuestionValue = document.getElementById(
+    "jobSpecQuestionInput"
   ).value;
-  const skillsInputValue = document.getElementById("skillsInput").value;
-  const promptInputValue = document.getElementById("promptInput").value;
+
+  if (!jobSpecQuestionValue.trim()) {
+    alert(
+      `Please paste a job spec into the "Job Spec or Question" box. This is required to submit.`
+    );
+    return;
+  }
+
+  const companyKnowledgeValue = document.getElementById(
+    "companyKnowledgeInput"
+  ).value;
+  const skillsValue = document.getElementById("skillsInput").value;
   const submitButton = document.getElementById("submitButton");
   const resetButton = document.getElementById("resetButton");
 
@@ -75,9 +85,9 @@ async function getInterviewAdvice() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        companyCulture: companyCultureInputValue,
-        skills: skillsInputValue,
-        message: promptInputValue,
+        jobSpecQuestion: jobSpecQuestionValue,
+        companyKnowledge: companyKnowledgeValue,
+        skills: skillsValue,
       }),
     });
 
@@ -156,7 +166,17 @@ async function resetChatbotState() {
 Event listeners
 */
 document
-  .getElementById("companyCultureInput")
+  .getElementById("jobSpecQuestionInput")
+  .addEventListener("keydown", function (event) {
+    // Enter will "submit" the prompt, while Shift + Enter will add a new line in the prompt input element (similar to ChatGPT's web interface)
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      getInterviewAdvice();
+    }
+  });
+
+document
+  .getElementById("companyKnowledgeInput")
   .addEventListener("keydown", function (event) {
     // Enter will "submit" the prompt, while Shift + Enter will add a new line in the prompt input element (similar to ChatGPT's web interface)
     if (event.key === "Enter" && !event.shiftKey) {
@@ -167,16 +187,6 @@ document
 
 document
   .getElementById("skillsInput")
-  .addEventListener("keydown", function (event) {
-    // Enter will "submit" the prompt, while Shift + Enter will add a new line in the prompt input element (similar to ChatGPT's web interface)
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      getInterviewAdvice();
-    }
-  });
-
-document
-  .getElementById("promptInput")
   .addEventListener("keydown", function (event) {
     // Enter will "submit" the prompt, while Shift + Enter will add a new line in the prompt input element (similar to ChatGPT's web interface)
     if (event.key === "Enter" && !event.shiftKey) {
