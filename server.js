@@ -37,7 +37,7 @@ const app = express();
 Middleware setup
 */
 
-app.use("/", express.static("frontend"));
+app.use(express.static("frontend"));
 app.use(cors());
 app.use(bodyParser.json());
 
