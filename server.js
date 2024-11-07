@@ -30,7 +30,7 @@ const app = express();
 /*
 Middleware setup
 */
-app.use("/", express.static("frontend"));
+app.use(express.static("frontend"));
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -45,6 +45,11 @@ const openai = new OpenAIApi(config);
 /*
 Express routes
 */
+// Get route to serve the frontend index.html file
+app.get("/", function (req, res) {
+  res.sendFile("index.html");
+});
+
 // Post route to handle the user's prompts (i.e., prompt) and return the chatbot's response
 app.post("/message", (req, res) => {
   // Get the body (so, the user's prompts) from the posted HTTP request's body
