@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "An AI-powered, personalised job interview advice chatbot",
   "keywords": [],
-  "author": "Pieter Smith",
+  "author": "Pieter Smith, Kelly S, Emilija B",
   "license": "ISC",
   "main": "server.js",
   "type": "module",
