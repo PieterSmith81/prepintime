@@ -107,11 +107,6 @@ async function getInterviewAdvice() {
     enableButton(submitButton, "Get Interview Advice");
     showElement(resetButton);
 
-    // Scroll to the first input element's title
-    document
-      .getElementById("submitButton")
-      .scrollIntoView({ behavior: "smooth" });
-
     // Focus on the first input element
     focusOnFirstInput();
   } catch (error) {
