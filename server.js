@@ -34,7 +34,7 @@ const app = express();
 /*
 Middleware setup
 */
-//app.use(express.static("frontend"));
+app.use(express.static("frontend"));
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -50,9 +50,7 @@ const openai = new OpenAIApi(config);
 Express routes
 */
 // Get route to serve the frontend index.html file
-// Get route to serve the frontend index.html file
 app.get("/", function (req, res) {
-  console.log(path.join(path.resolve(), "frontend", "index.html"));
   res.sendFile(path.join(path.resolve(), "frontend", "index.html"));
 });
 
