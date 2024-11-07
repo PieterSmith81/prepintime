@@ -44,6 +44,11 @@ const openai = new OpenAIApi(config);
 /*
 Express routes
 */
+// Get route to test if the server is running
+app.get("/", function (req, res) {
+  res.json({ message: "alive" });
+});
+
 // Post route to handle the user's prompts (i.e., prompt) and return the chatbot's response
 app.post("/message", (req, res) => {
   // Get the body (so, the user's prompts) from the posted HTTP request's body
