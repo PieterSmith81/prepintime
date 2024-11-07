@@ -126,10 +126,10 @@ ${skills}.`;
       const parsedMarkdown = md.render(result.data.choices[0].message.content);
 
       // Send the response back to the client as JSON
-      res.json({ advice: parsedMarkdown });
+      res.status(200).json({ message: parsedMarkdown });
     })
-    .catch((err) => {
-      console.log(err);
+    .catch((error) => {
+      console.log(error);
     });
 });
 
@@ -139,7 +139,7 @@ app.post("/reset", (req, res) => {
   messages = [];
 
   // Send a response back to the client
-  res.json({ message: "Chatbot history and context cleared." });
+  res.status(200).json({ message: "Chatbot history and context cleared." });
 });
 
 /*

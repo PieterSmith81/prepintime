@@ -81,7 +81,8 @@ async function getInterviewAdvice() {
     hideElement(document.getElementById("resultOutput"));
 
     // Make the POST request to the backend API
-    const response = await fetch("https://prepintime.onrender.com/message", {
+    // const response = await fetch("https://localhost:3000/message", {
+    const response = await fetch("/message", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -97,7 +98,7 @@ async function getInterviewAdvice() {
 
     // Display the advice in the output div
     const resultOutputElement = document.getElementById("resultOutput");
-    resultOutputElement.innerHTML = data.advice;
+    resultOutputElement.innerHTML = data.message;
 
     // Show the result output element
     showElement(resultOutputElement);
@@ -113,8 +114,8 @@ async function getInterviewAdvice() {
     enableButton(submitButton, "Get Interview Advice");
     showElement(resetButton);
 
-    // Hide the result output element if something goes wrong
-    hideElement(document.getElementById("resultOutput"));
+    // Show the result output element if something goes wrong
+    showElement(document.getElementById("resultOutput"));
 
     // Display an error message if something goes wrong
     document.getElementById(
@@ -132,7 +133,8 @@ async function resetChatbotState() {
 
   try {
     // Make the POST request to the backend API
-    const response = await fetch("http://localhost:3000/reset", {
+    // const response = await fetch("http://localhost:3000/reset", {
+    const response = await fetch("/reset", {
       method: "POST",
     });
 
@@ -151,8 +153,8 @@ async function resetChatbotState() {
     // Focus on the first input element after the chatbot state is reset
     focusOnFirstInput();
   } catch (error) {
-    // Hide the result output element if something goes wrong
-    hideElement(document.getElementById("resultOutput"));
+    // Show the result output element if something goes wrong
+    showElement(document.getElementById("resultOutput"));
 
     // Display an error message if something goes wrong
     document.getElementById(
