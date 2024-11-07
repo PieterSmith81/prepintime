@@ -4,7 +4,6 @@ Node.js package imports
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import path from "path";
 import { Configuration, OpenAIApi } from "openai";
 import markdownit from "markdown-it"; // https://github.com/markdown-it/markdown-it
 import "dotenv/config";
@@ -15,7 +14,7 @@ Global variable definitions and initializations
 // Initial empty messages (a.k.a. prompts) array definition and initialization (will eventually contain an array of multiple message objects, i.e., multiple prompts)
 let messages = [];
 
-// Other  global variables
+// Other global variables
 let previousCompanyKnowledge = "";
 let previousSkills = "";
 
@@ -34,7 +33,6 @@ const app = express();
 /*
 Middleware setup
 */
-app.use(express.static("frontend"));
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -49,11 +47,6 @@ const openai = new OpenAIApi(config);
 /*
 Express routes
 */
-// Get route to serve the frontend index.html file
-app.get("/", function (req, res) {
-  res.sendFile(path.join(path.resolve(), "frontend", "index.html"));
-});
-
 // Post route to handle the user's prompts (i.e., prompt) and return the chatbot's response
 app.post("/message", (req, res) => {
   // Get the body (so, the user's prompts) from the posted HTTP request's body
