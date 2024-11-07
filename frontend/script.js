@@ -79,7 +79,7 @@ async function getInterviewAdvice() {
     hideElement(document.getElementById("resultOutput"));
 
     // Make the POST request to the backend API
-    const response = await fetch("http://localhost:3000/message", {
+    const response = await fetch("https://prepintime.vercel.app/message", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
