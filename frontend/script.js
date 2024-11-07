@@ -1,6 +1,7 @@
 /*
 Helper functions
 */
+
 function disableButton(button, updatedButtonText = "") {
   button.disabled = true;
   button.classList.add("disabled");
@@ -50,6 +51,7 @@ function hideElement(element) {
 /*
 Main functions
 */
+
 // Function to get interview advice
 async function getInterviewAdvice() {
   const jobSpecQuestionValue = document.getElementById(
@@ -165,6 +167,7 @@ async function resetChatbotState() {
 /*
 Event listeners
 */
+
 document
   .getElementById("jobSpecQuestionInput")
   .addEventListener("keydown", function (event) {

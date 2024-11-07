@@ -1,6 +1,7 @@
 /*
 Node.js package imports
 */
+
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
@@ -11,6 +12,7 @@ import "dotenv/config";
 /*
 Global variable definitions and initializations
 */
+
 // Initial empty messages (a.k.a. prompts) array definition and initialization (will eventually contain an array of multiple message objects, i.e., multiple prompts)
 let messages = [];
 
@@ -28,17 +30,20 @@ Here is the job spec or follow-up question:`;
 /*
 Express app creation
 */
+
 const app = express();
 
 /*
 Middleware setup
 */
+
 app.use(cors());
 app.use(bodyParser.json());
 
 /*
 OpenAI v3 API setup
 */
+
 const config = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -47,6 +52,7 @@ const openai = new OpenAIApi(config);
 /*
 Express routes
 */
+
 // Post route to handle the user's prompts (i.e., prompt) and return the chatbot's response
 app.post("/message", (req, res) => {
   // Get the body (so, the user's prompts) from the posted HTTP request's body
@@ -138,6 +144,7 @@ app.post("/reset", (req, res) => {
 /*
 Express server spin up
 */
+
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
