@@ -8,9 +8,9 @@ An AI-powered, personalised job interview advice chatbot.
 
 ## Tech Stack
 
-OpenAI GPT-4o mini LLM, OpenAI API, custom AI prompts, JavaScript, HTML, CSS
+OpenAI GPT-4o mini LLM, OpenAI API, custom AI prompts, JavaScript, HTML, CSS.
 
-## Description
+## Overview
 
 PrepInTime is a tailored job interview advice chatbot that delivers personalised guidance based on job specifications, company research, and technical skills. Powered by OpenAI’s GPT-4o mini LLM, it utilises custom prompts for reliability and safety.
 
