@@ -30,7 +30,7 @@ Just ask, we've got you covered (use the "Job Spec or Question" box for follow-u
 
 - Hit `<Enter>` in any input box to get your interview advice.
 - Or hit `<Shift+Enter>` in any of the input boxes for a new line (similar to ChatGPT).
-- Then, scroll down to see your interview advice.
+- **Then, scroll down to see your interview advice.**
 - For optimal advice and a complete gap analysis, make sure you fill out the "Company Knowledge" and "Skills" sections.
 
 ## Installation
