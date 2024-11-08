@@ -8,7 +8,7 @@ An AI-powered, personalised job interview advice chatbot.
 
 ## Tech Stack
 
-OpenAI GPT-4o mini LLM, OpenAI API, custom AI prompts, JavaScript, HTML, x CSS.
+OpenAI GPT-4o mini LLM, OpenAI API, custom AI prompts, JavaScript, HTML, CSS.
 
 ## Overview
 
