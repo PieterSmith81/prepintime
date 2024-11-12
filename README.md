@@ -44,4 +44,4 @@ Just ask, we've got you covered (use the "Job Spec or Question" box for follow-u
 
 4. Run `npm run dev` in your terminal to start an automatically restarting express server (implemented using nodemon). Alternatively, run `npm start` to start the express server in production mode (in production mode, the express server won't restart automatically on code changes).
 
-5. Open the `/frontend/index.html` file in your browser. You can either open the file directly in your browser or use the VS code Live Server extension's `right-click > Open with Live Server` option.
+5. Navigate to http://localhost:3000 in your browser to view the PrepInTime frontend website and get your interview advice.
