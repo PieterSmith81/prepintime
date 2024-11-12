@@ -106,9 +106,6 @@ async function getInterviewAdvice() {
     // Re-enable the submit and reset buttons
     enableButton(submitButton, "Get Interview Advice");
     showElement(resetButton);
-
-    // Focus on the first input element
-    focusOnFirstInput();
   } catch (error) {
     // Re-enable the submit and reset buttons if something goes wrong
     enableButton(submitButton, "Get Interview Advice");
