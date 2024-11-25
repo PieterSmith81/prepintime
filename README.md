@@ -2,7 +2,7 @@
 
 An AI-powered, personalised job interview advice chatbot.
 
-## Live Website
+## Live Demo Website
 
 ### https://prepintime.onrender.com
 
